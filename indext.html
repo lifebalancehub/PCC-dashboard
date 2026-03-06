@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PCC คลินิกหมอครอบครัว รพ.แม่สอด</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a6b4a;
+    --primary-light: #2a8f63;
+    --primary-dark: #0e4a32;
+    --accent: #f0a500;
+    --accent-light: #ffd166;
+    --bg: #f0f7f4;
+    --card-bg: #ffffff;
+    --text: #1a2e25;
+    --text-light: #5a7a6a;
+    --border: #c8e6d8;
+    --shadow: 0 4px 20px rgba(26,107,74,0.10);
+    --shadow-hover: 0 8px 32px rgba(26,107,74,0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Sarabun', 'Noto Sans Thai', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-light) 100%);
+    color: white;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .logo-circle {
+    width: 46px;
+    height: 46px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    flex-shrink: 0;
+  }
+
+  .header-titles h1 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  .header-titles p {
+    font-size: 12px;
+    opacity: 0.82;
+    font-weight: 400;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn-login {
+    background: rgba(255,255,255,0.18);
+    color: white;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    padding: 8px 20px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-family: 'Sarabun', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+  .btn-login:hover {
+    background: white;
+    color: var(--primary);
+  }
+
+  /* ===== BREADCRUMB ===== */
+  .breadcrumb {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 32px;
+    font-size: 13px;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .breadcrumb span { color: var(--primary); font-weight: 600; }
+
+  /* ===== MAIN ===== */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-subtitle {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 28px;
+  }
+
+  /* ===== STATS ROW ===== */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px 18px;
+    box-shadow: var(--shadow);
+    border-left: 5px solid var(--primary);
+    transition: transform 0.2s;
+  }
+  .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+  .stat-card.accent { border-left-color: var(--accent); }
+  .stat-card.teal   { border-left-color: #2196a6; }
+  .stat-card.rose   { border-left-color: #e05a7a; }
+
+  .stat-label { font-size: 12px; color: var(--text-light); margin-bottom: 6px; font-weight: 500; }
+  .stat-value { font-size: 30px; font-weight: 700; color: var(--primary-dark); line-height: 1; }
+  .stat-card.accent .stat-value { color: #b87800; }
+  .stat-card.teal   .stat-value { color: #2196a6; }
+  .stat-card.rose   .stat-value { color: #e05a7a; }
+  .stat-sub { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+
+  /* ===== MENU GRID ===== */
+  .menu-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 36px;
+  }
+
+  .menu-card {
+    background: white;
+    border-radius: 16px;
+    padding: 28px 20px 22px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: all 0.22s;
+    text-align: center;
+    border: 2px solid transparent;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+  .menu-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--card-accent, var(--primary)), var(--card-accent2, var(--primary-light)));
+  }
+  .menu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-light);
+  }
+
+  .menu-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--card-accent, var(--primary)), var(--card-accent2, var(--primary-light)));
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  }
+
+  .menu-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .menu-name-en {
+    font-size: 11px;
+    color: var(--text-light);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  /* color themes per card */
+  .card-checkin  { --card-accent: #1a6b4a; --card-accent2: #2a8f63; }
+  .card-ncd      { --card-accent: #e05a7a; --card-accent2: #f08090; }
+  .card-teen     { --card-accent: #6c4bbf; --card-accent2: #9b72e0; }
+  .card-aging    { --card-accent: #2196a6; --card-accent2: #4bbdcc; }
+  .card-report   { --card-accent: #f0a500; --card-accent2: #ffd166; }
+  .card-settings { --card-accent: #607d8b; --card-accent2: #90a4ae; }
+
+  /* ===== PATIENT TABLE ===== */
+  .table-section {
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .table-header {
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .table-header h3 { font-size: 16px; font-weight: 700; color: var(--primary-dark); }
+
+  .tag {
+    background: var(--bg);
+    color: var(--primary);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid var(--border);
+  }
+  .tag.ncd   { background: #fde8ed; color: #c0395a; border-color: #f5b8c6; }
+  .tag.teen  { background: #ede8f8; color: #6c4bbf; border-color: #c9b8ed; }
+  .tag.aging { background: #e4f4f7; color: #2196a6; border-color: #b0dce4; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    background: var(--bg);
+    padding: 11px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td {
+    padding: 13px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f5f2;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f7fbf9; }
+
+  .patient-name { font-weight: 600; color: var(--text); }
+
+  .status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .status-active { background: #d4edda; color: #1a6b4a; }
+  .status-pending { background: #fff3cd; color: #856404; }
+  .status-risk { background: #fde8ed; color: #c0395a; }
+
+  /* ===== LOGIN MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: white;
+    border-radius: 20px;
+    padding: 36px 32px;
+    width: 360px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    animation: modalIn 0.25s ease;
+  }
+  @keyframes modalIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+
+  .modal-logo {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .modal-logo .circle {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 10px;
+  }
+  .modal-logo h2 { font-size: 17px; font-weight: 700; color: var(--primary-dark); }
+  .modal-logo p  { font-size: 12px; color: var(--text-light); }
+
+  .form-group { margin-bottom: 14px; }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Sarabun', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: var(--primary);
+  }
+
+  .btn-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Sarabun', sans-serif;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: opacity 0.2s;
+  }
+  .btn-submit:hover { opacity: 0.88; }
+
+  .btn-cancel {
+    width: 100%;
+    background: transparent;
+    color: var(--text-light);
+    border: none;
+    font-size: 13px;
+    font-family: 'Sarabun', sans-serif;
+    cursor: pointer;
+    margin-top: 10px;
+    text-decoration: underline;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 18px;
+    font-size: 12px;
+    color: var(--text-light);
+    border-top: 1px solid var(--border);
+    background: white;
+  }
+  footer strong { color: var(--primary); }
+
+  /* ===== NAV TABS ===== */
+  .nav-tabs {
+    background: white;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    gap: 0;
+    padding: 0 32px;
+    overflow-x: auto;
+  }
+  .nav-tab {
+    padding: 14px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Sarabun', sans-serif;
+    color: var(--text-light);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-tab:hover { color: var(--primary); }
+  .nav-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+    background: #f0f7f4;
+    border-radius: 8px 8px 0 0;
+  }
+
+  /* ===== PAGE SECTIONS ===== */
+  .page-section { display: none; }
+  .page-section.active { display: block; }
+
+  /* ===== NCD LOOKER SECTION ===== */
+  .ncd-hero {
+    background: linear-gradient(135deg, #e8f5f0 0%, #d0ede2 100%);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .ncd-hero-left h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin-bottom: 4px;
+  }
+  .ncd-hero-left p { font-size: 13px; color: var(--text-light); }
+  .ncd-hero-stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .ncd-hero-stat {
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    padding: 14px 22px;
+    box-shadow: var(--shadow);
+    min-width: 110px;
+  }
+  .ncd-hero-stat .val {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .ncd-hero-stat .lbl { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+  .ncd-hero-stat.green .val { color: var(--primary); }
+  .ncd-hero-stat.orange .val { color: #e07000; }
+  .ncd-hero-stat.red .val { color: #c0395a; }
+  .ncd-hero-stat.teal2 .val { color: #2196a6; }
+
+  /* NCD group cards */
+  .ncd-groups {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .ncd-group-card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-left: 5px solid var(--gc, #ccc);
+  }
+  .ncd-group-card.normal { --gc: #1a6b4a; }
+  .ncd-group-card.risk   { --gc: #f0a500; }
+  .ncd-group-card.sick   { --gc: #c0395a; }
+  .ncd-group-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--gc) 15%, white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .ncd-group-name { font-size: 13px; color: var(--text-light); margin-bottom: 2px; }
+  .ncd-group-val  { font-size: 28px; font-weight: 800; color: var(--gc); line-height: 1; }
+
+  /* NCD table */
+  .ncd-table-wrap {
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .ncd-table-header {
+    background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+    color: white;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ncd-table-header h3 { font-size: 15px; font-weight: 700; }
+  .ncd-table-header span { font-size: 12px; opacity: 0.8; }
+
+  .ncd-table-wrap table { width: 100%; border-collapse: collapse; }
+  .ncd-table-wrap th {
+    background: #e8f5ee;
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    text-align: center;
+    border-bottom: 2px solid var(--border);
+  }
+  .ncd-table-wrap th:first-child { text-align: left; }
+  .ncd-table-wrap td {
+    padding: 11px 14px;
+    font-size: 13px;
+    text-align: center;
+    border-bottom: 1px solid #f0f5f2;
+  }
+  .ncd-table-wrap td:first-child { text-align: left; font-weight: 600; color: var(--primary-dark); }
+  .ncd-table-wrap tr:last-child td {
+    background: #e8f5ee;
+    font-weight: 700;
+    color: var(--primary-dark);
+  }
+  .ncd-table-wrap tr:hover:not(:last-child) td { background: #f7fbf9; }
+
+  .pct-bar-wrap { display: flex; align-items: center; gap: 6px; justify-content: center; }
+  .pct-bar { height: 8px; border-radius: 4px; background: var(--primary-light); min-width: 4px; }
+  .pct-txt { font-size: 12px; color: var(--primary-dark); font-weight: 600; min-width: 36px; }
+
+  /* Looker embed section */
+  .looker-section {
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .looker-header {
+    background: linear-gradient(90deg, #1a3a6b, #2456a8);
+    color: white;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .looker-header h3 { font-size: 15px; font-weight: 700; }
+  .looker-header a {
+    color: #a8d8ff;
+    font-size: 12px;
+    text-decoration: none;
+  }
+  .looker-header a:hover { color: white; text-decoration: underline; }
+  .looker-embed {
+    width: 100%;
+    height: 680px;
+    border: none;
+    display: block;
+  }
+  .looker-placeholder {
+    padding: 40px 20px;
+    text-align: center;
+    background: #f8faff;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .looker-placeholder .icon { font-size: 48px; }
+  .looker-placeholder h4 { font-size: 18px; font-weight: 700; color: #1a3a6b; }
+  .looker-placeholder p  { font-size: 13px; color: var(--text-light); max-width: 400px; }
+  .btn-open-looker {
+    background: linear-gradient(135deg, #1a3a6b, #2456a8);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Sarabun', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 4px;
+    transition: opacity 0.2s;
+  }
+  .btn-open-looker:hover { opacity: 0.85; }
+
+  /* ===== RESPONSIVE ===== */
+  /* ===== HDC LINK CARDS ===== */
+  .hdc-link-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+  .hdc-link-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px 16px 14px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--hdc-c, var(--primary));
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .hdc-link-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+  .hdc-icon {
+    width: 38px; height: 38px;
+    background: #f0f7f4;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+  .hdc-name { font-size: 13px; font-weight: 700; color: var(--text); }
+  .hdc-sub  { font-size: 11px; color: var(--text-light); }
+
+  /* HDC color themes */
+  .hdc-blue   { --hdc-c: #0d47a1; }
+  .hdc-teal   { --hdc-c: #006064; }
+  .hdc-green  { --hdc-c: #1b5e20; }
+  .hdc-rose   { --hdc-c: #c0395a; }
+  .hdc-orange { --hdc-c: #e65100; }
+  .hdc-purple { --hdc-c: #4a148c; }
+
+  /* ===== MOPH GRID CARDS ===== */
+  .moph-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+  .moph-card {
+    background: white;
+    border-radius: 14px;
+    padding: 18px 14px 14px;
+    box-shadow: var(--shadow);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    transition: all 0.22s;
+    border-top: 4px solid var(--mc, #1a6b4a);
+    position: relative;
+    overflow: hidden;
+  }
+  .moph-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+  .moph-icon {
+    width: 48px; height: 48px;
+    background: color-mix(in srgb, var(--mc, #1a6b4a) 12%, white);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .moph-name { font-size: 13px; font-weight: 700; color: var(--text); }
+  .moph-sub  { font-size: 10px; color: var(--text-light); }
+
+  /* ===== NCDs REGISTRY DISEASE CARDS ===== */
+  .registry-disease-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .reg-disease-card {
+    background: white;
+    border-radius: 14px;
+    padding: 16px 10px 14px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    border-top: 4px solid var(--dc, #1a6b4a);
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .reg-disease-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+  .reg-d-icon { font-size: 26px; margin-bottom: 6px; }
+  .reg-d-code { font-size: 10px; color: var(--dc,#888); font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .reg-d-name { font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.3; }
+
+  @media (max-width: 768px) {
+    .registry-disease-grid { grid-template-columns: repeat(3, 1fr); }
+    .hdc-link-grid { grid-template-columns: repeat(2, 1fr); }
+    .moph-grid     { grid-template-columns: repeat(2, 1fr); }
+    .stats-row  { grid-template-columns: repeat(2, 1fr); }
+    .menu-grid  { grid-template-columns: repeat(2, 1fr); }
+    .ncd-groups { grid-template-columns: repeat(2, 1fr); }
+    header { padding: 0 16px; }
+    main   { padding: 20px 12px 40px; }
+    .header-titles p { display: none; }
+    .nav-tabs { padding: 0 8px; }
+    .looker-embed { height: 420px; }
+    .ncd-hero { padding: 18px; }
+    .ncd-table-wrap { overflow-x: auto; }
+  }
+  @media (max-width: 480px) {
+    .registry-disease-grid { grid-template-columns: repeat(2, 1fr); }
+    .hdc-link-grid { grid-template-columns: 1fr; }
+    .moph-grid     { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <div class="logo-circle">PCC</div>
+    <div class="header-titles">
+      <h1>คลินิกหมอครอบครัว รพ.แม่สอด</h1>
+      <p>Primary Care Cluster | Mae Sot Hospital</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="btn-login" onclick="document.getElementById('loginModal').classList.add('active')">
+      🔐 เข้าสู่ระบบ
+    </button>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb" id="breadcrumb-bar">
+  🏠 <span>หน้าหลัก</span> › <span id="bc-page">Dashboard</span>
+</div>
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="showPage('dashboard', this)">🏠 Dashboard</button>
+  <button class="nav-tab" onclick="showPage('ncd', this)">❤️ NCD Prevention</button>
+  <button class="nav-tab" onclick="showPage('ncd-remission', this)">🏥 NCDs Remission</button>
+  <button class="nav-tab" onclick="showPage('carb', this)">🌾 นับคาร์บ</button>
+  <button class="nav-tab" onclick="showPage('hdc', this)">📊 HDC / รายงาน</button>
+  <button class="nav-tab" onclick="showPage('moph-links', this)">🔗 ระบบ MOPH</button>
+  <button class="nav-tab" onclick="showPage('ncd-registry', this)">📋 NCDs Registry</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<main>
+
+<!-- ===================== PAGE: DASHBOARD ===================== -->
+<div class="page-section active" id="page-dashboard">
+
+  <div class="section-title">📊 Dashboard</div>
+  <div class="section-subtitle">ภาพรวมระบบคลินิกหมอครอบครัว โรงพยาบาลแม่สอด</div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">ผู้ป่วยทั้งหมด</div>
+      <div class="stat-value">1,284</div>
+      <div class="stat-sub">อัปเดตล่าสุดวันนี้</div>
+    </div>
+    <div class="stat-card accent">
+      <div class="stat-label">Check-in วันนี้</div>
+      <div class="stat-value">47</div>
+      <div class="stat-sub">มีนาคม 2568</div>
+    </div>
+    <div class="stat-card teal">
+      <div class="stat-label">กลุ่มสูงวัย</div>
+      <div class="stat-value">386</div>
+      <div class="stat-sub">อายุ 60 ปีขึ้นไป</div>
+    </div>
+    <div class="stat-card rose">
+      <div class="stat-label">กลุ่มเสี่ยง NCD</div>
+      <div class="stat-value">219</div>
+      <div class="stat-sub">ต้องติดตามใกล้ชิด</div>
+    </div>
+  </div>
+
+  <!-- MAIN MENUS -->
+  <div class="menu-title">🗂️ เมนูระบบหลัก</div>
+  <div class="menu-grid">
+
+    <a href="#" class="menu-card card-checkin">
+      <div class="menu-icon">✅</div>
+      <div class="menu-name">Check-in จุดตรวจ</div>
+      <div class="menu-name-en">Check-In System</div>
+    </a>
+
+    <a href="#" class="menu-card card-ncd">
+      <div class="menu-icon">❤️</div>
+      <div class="menu-name">ระบบโรค NCD</div>
+      <div class="menu-name-en">NCD System</div>
+    </a>
+
+    <a href="#" class="menu-card card-teen">
+      <div class="menu-icon">🧑</div>
+      <div class="menu-name">กลุ่มวัยรุ่น</div>
+      <div class="menu-name-en">Teen System</div>
+    </a>
+
+    <a href="#" class="menu-card card-aging">
+      <div class="menu-icon">👴</div>
+      <div class="menu-name">กลุ่มสูงวัย</div>
+      <div class="menu-name-en">Aging System</div>
+    </a>
+
+    <a href="#" class="menu-card card-report">
+      <div class="menu-icon">📄</div>
+      <div class="menu-name">รายงาน / สรุปผล</div>
+      <div class="menu-name-en">Reports</div>
+    </a>
+
+    <a href="#" class="menu-card card-settings">
+      <div class="menu-icon">⚙️</div>
+      <div class="menu-name">ตั้งค่าระบบ</div>
+      <div class="menu-name-en">Settings</div>
+    </a>
+
+  </div>
+
+  <!-- PATIENT TABLE -->
+  <div class="table-section">
+    <div class="table-header">
+      <h3>👥 รายชื่อผู้ป่วยล่าสุด</h3>
+      <span class="tag">อัปเดตวันนี้</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>ชื่อ-นามสกุล</th>
+          <th>อายุ</th>
+          <th>กลุ่ม</th>
+          <th>วันนัดหมาย</th>
+          <th>สถานะ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>001</td>
+          <td class="patient-name">นาง สมศรี ใจดี</td>
+          <td>63 ปี</td>
+          <td><span class="tag aging">สูงวัย</span></td>
+          <td>5 มี.ค. 2568</td>
+          <td><span class="status-badge status-active">ปกติ</span></td>
+        </tr>
+        <tr>
+          <td>002</td>
+          <td class="patient-name">นาย วิชัย ทองดี</td>
+          <td>52 ปี</td>
+          <td><span class="tag ncd">NCD</span></td>
+          <td>5 มี.ค. 2568</td>
+          <td><span class="status-badge status-risk">เสี่ยงสูง</span></td>
+        </tr>
+        <tr>
+          <td>003</td>
+          <td class="patient-name">นางสาว มานี สุขใส</td>
+          <td>17 ปี</td>
+          <td><span class="tag teen">วัยรุ่น</span></td>
+          <td>6 มี.ค. 2568</td>
+          <td><span class="status-badge status-pending">รอติดตาม</span></td>
+        </tr>
+        <tr>
+          <td>004</td>
+          <td class="patient-name">นาย ประสิทธิ์ ดีงาม</td>
+          <td>70 ปี</td>
+          <td><span class="tag aging">สูงวัย</span></td>
+          <td>7 มี.ค. 2568</td>
+          <td><span class="status-badge status-active">ปกติ</span></td>
+        </tr>
+        <tr>
+          <td>005</td>
+          <td class="patient-name">นาง รัตนา พรประเสริฐ</td>
+          <td>58 ปี</td>
+          <td><span class="tag ncd">NCD</span></td>
+          <td>8 มี.ค. 2568</td>
+          <td><span class="status-badge status-active">ปกติ</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- end page-dashboard -->
+
+<!-- ===================== PAGE: NCD PREVENTION ===================== -->
+<div class="page-section" id="page-ncd">
+
+  <div class="section-title">❤️ คนไทยห่างไกล NCDs จังหวัดตาก</div>
+  <div class="section-subtitle">ข้อมูล ณ วันที่ 5 มีนาคม พ.ศ. 2569</div>
+
+  <div class="ncd-hero">
+    <div class="ncd-hero-left">
+      <h2>🏥 NCD Prevention</h2>
+      <p>ผลการดำเนินงานป้องกัน NCDs คนไทยห่างไกลโรค จังหวัดตาก</p>
+    </div>
+    <div class="ncd-hero-stats">
+      <div class="ncd-hero-stat green"><div class="val">8,645</div><div class="lbl">จำนวนผู้รับบริการ</div></div>
+      <div class="ncd-hero-stat teal2"><div class="val">4,445</div><div class="lbl">ผู้เข้ารับการอบรม</div></div>
+      <div class="ncd-hero-stat orange"><div class="val">189 กก.</div><div class="lbl">น้ำหนักสะสมที่ลดได้</div></div>
+    </div>
+  </div>
+
+  <div class="ncd-groups">
+    <div class="ncd-group-card normal"><div class="ncd-group-icon">😊</div><div><div class="ncd-group-name">กลุ่มปกติ</div><div class="ncd-group-val">3,710</div></div></div>
+    <div class="ncd-group-card risk"><div class="ncd-group-icon">⚠️</div><div><div class="ncd-group-name">กลุ่มเสี่ยง</div><div class="ncd-group-val">4,275</div></div></div>
+    <div class="ncd-group-card sick"><div class="ncd-group-icon">🏥</div><div><div class="ncd-group-name">กลุ่มป่วย</div><div class="ncd-group-val">659</div></div></div>
+  </div>
+
+  <div class="ncd-table-wrap">
+    <div class="ncd-table-header"><h3>📋 ผลการดำเนินงาน รายอำเภอ จังหวัดตาก</h3><span>ข้อมูล ณ 5 มี.ค. 2569</span></div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr><th>#</th><th>อำเภอ</th><th>เป้าหมาย</th><th>ได้รับการคัดกรอง</th><th>ร้อยละ</th><th>เข้าบริการ NCD Prevention</th><th>กลุ่มปกติ</th><th>กลุ่มเสี่ยง</th><th>กลุ่มป่วย</th><th>เข้าอบรม</th><th>น้ำหนักลด</th><th>กลับมาปกติ</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>เมืองตาก</td><td>47,867</td><td>32,798</td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:55px"></div><span class="pct-txt">68.52%</span></div></td><td>24</td><td>5</td><td>14</td><td>5</td><td>8</td><td>0</td><td>0</td></tr>
+        <tr><td>2</td><td>แม่สอด</td><td>34,442</td><td>16,935</td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:40px"></div><span class="pct-txt">49.17%</span></div></td><td>5,316</td><td>2,307</td><td>2,633</td><td>376</td><td>2,969</td><td>27</td><td>2</td></tr>
+        <tr><td>3</td><td>บ้านตาก</td><td>31,456</td><td>13,795</td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:35px"></div><span class="pct-txt">43.85%</span></div></td><td>65</td><td>11</td><td>43</td><td>11</td><td>41</td><td>93</td><td>2</td></tr>
+        <tr><td>4</td><td>พบพระ</td><td>26,259</td><td>10,527</td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:32px"></div><span class="pct-txt">40.09%</span></div></td><td>2,153</td><td>952</td><td>1,019</td><td>182</td><td>1,247</td><td>13</td><td>1</td></tr>
+        <tr><td>5</td><td>แม่ระมาด</td><td>18,142</td><td>8,131</td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:36px"></div><span class="pct-txt">44.82%</span></div></td><td>649</td><td>264</td><td>348</td><td>37</td><td>122</td><td>0</td><td>0</td></tr>
+        <tr><td>6</td><td>วังเจ้า</td><td>15,693</td><td>6,375</td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:33px"></div><span class="pct-txt">40.62%</span></div></td><td>42</td><td>5</td><td>27</td><td>9</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>7</td><td>สามเงา</td><td>11,987</td><td>8,556</td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:57px"></div><span class="pct-txt">71.38%</span></div></td><td>109</td><td>24</td><td>65</td><td>20</td><td>30</td><td>56</td><td>2</td></tr>
+        <tr><td>8</td><td>ท่าสองยาง</td><td>8,265</td><td>11,213</td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:80px;background:#c0395a"></div><span class="pct-txt" style="color:#c0395a">135.67%</span></div></td><td>8</td><td>0</td><td>5</td><td>3</td><td>3</td><td>0</td><td>0</td></tr>
+        <tr><td>9</td><td>อุ้มผาง</td><td>7,779</td><td>6,225</td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:64px"></div><span class="pct-txt">80.02%</span></div></td><td>279</td><td>142</td><td>121</td><td>16</td><td>25</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="looker-section">
+    <div class="looker-header">
+      <h3>📊 รายงาน Looker Studio — NCD Prevention จังหวัดตาก</h3>
+      <a href="https://lookerstudio.google.com/reporting/1249a0a7-6133-4494-a853-ec9462f7bc23/page/p_zm9jpg39ud" target="_blank">🔗 เปิดหน้าต่างใหม่</a>
+    </div>
+    <iframe class="looker-embed"
+      src="https://lookerstudio.google.com/embed/reporting/1249a0a7-6133-4494-a853-ec9462f7bc23/page/p_zm9jpg39ud"
+      allowfullscreen
+      sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+      title="NCD Prevention Dashboard"></iframe>
+  </div>
+
+</div><!-- end page-ncd -->
+
+<!-- ===================== PAGE: NCDs REMISSION ===================== -->
+<div class="page-section" id="page-ncd-remission">
+
+  <div class="section-title">🏥 ผลการดำเนินงาน คลินิก NCDs รักษาหาย</div>
+  <div class="section-subtitle">ข้อมูล ณ วันที่ 5 มีนาคม พ.ศ. 2569</div>
+
+  <div class="stats-row" style="margin-bottom:24px">
+    <div class="stat-card"><div class="stat-label">ผู้ป่วยเข้าปรับเปลี่ยนพฤติกรรม</div><div class="stat-value">1,611</div><div class="stat-sub">รวมทุกอำเภอ</div></div>
+    <div class="stat-card teal"><div class="stat-label">เข้าเกณฑ์ NCDs Remission</div><div class="stat-value">248</div><div class="stat-sub">คน</div></div>
+    <div class="stat-card accent"><div class="stat-label">หยุดยาได้</div><div class="stat-value">95</div><div class="stat-sub">คน</div></div>
+    <div class="stat-card rose"><div class="stat-label">รับยาเท่าเดิม</div><div class="stat-value">751</div><div class="stat-sub">คน</div></div>
+  </div>
+
+  <div class="ncd-table-wrap">
+    <div class="ncd-table-header"><h3>📋 NCDs Remission รายอำเภอ</h3><span>ข้อมูล ณ 5 มี.ค. 2569</span></div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr><th>อำเภอ</th><th>ปรับพฤติกรรม</th><th>Remission</th><th>หยุดยา</th><th>ลดยา 1 ตัว</th><th>ลดยา 2 ตัว</th><th>ลดยา 3 ตัว</th><th>ลดยา 4 ตัว</th><th>ลดยา ≥5</th><th>รับยาเท่าเดิม</th><th>รับยาเพิ่ม</th><th>ต้องเพิ่มยา</th><th>ขาดนัด</th></tr></thead>
+      <tbody>
+        <tr><td>อุ้มผาง</td><td>658</td><td>64</td><td>11</td><td>141</td><td>57</td><td>8</td><td>0</td><td>0</td><td>377</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>เมืองตาก</td><td>308</td><td>26</td><td>26</td><td>62</td><td>15</td><td>5</td><td>0</td><td>0</td><td>172</td><td>2</td><td>0</td><td>0</td></tr>
+        <tr><td>แม่ระมาด</td><td>237</td><td>108</td><td>14</td><td>4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>21</td><td>0</td><td>90</td><td>0</td></tr>
+        <tr><td>พบพระ</td><td>128</td><td>4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>124</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>สามเงา</td><td>96</td><td>32</td><td>38</td><td>4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>22</td><td>0</td></tr>
+        <tr><td>ท่าสองยาง</td><td>72</td><td>6</td><td>2</td><td>20</td><td>5</td><td>0</td><td>0</td><td>0</td><td>18</td><td>5</td><td>12</td><td>4</td></tr>
+        <tr><td>แม่สอด</td><td>48</td><td>4</td><td>0</td><td>11</td><td>0</td><td>0</td><td>0</td><td>0</td><td>31</td><td>2</td><td>0</td><td>0</td></tr>
+        <tr><td>วังเจ้า</td><td>36</td><td>2</td><td>2</td><td>7</td><td>3</td><td>0</td><td>0</td><td>0</td><td>2</td><td>4</td><td>16</td><td>0</td></tr>
+        <tr><td>บ้านตาก</td><td>28</td><td>2</td><td>2</td><td>8</td><td>5</td><td>3</td><td>0</td><td>0</td><td>6</td><td>2</td><td>0</td><td>0</td></tr>
+        <tr><td><strong>รวม</strong></td><td><strong>1,611</strong></td><td><strong>248</strong></td><td><strong>95</strong></td><td><strong>257</strong></td><td><strong>85</strong></td><td><strong>16</strong></td><td><strong>0</strong></td><td><strong>0</strong></td><td><strong>751</strong></td><td><strong>15</strong></td><td><strong>140</strong></td><td><strong>4</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="looker-section">
+    <div class="looker-header">
+      <h3>📊 รายงาน Looker Studio — NCDs Remission</h3>
+      <a href="https://lookerstudio.google.com/reporting/1249a0a7-6133-4494-a853-ec9462f7bc23/page/p_vgz32sb8td" target="_blank">🔗 เปิดหน้าต่างใหม่</a>
+    </div>
+    <iframe class="looker-embed"
+      src="https://lookerstudio.google.com/embed/reporting/1249a0a7-6133-4494-a853-ec9462f7bc23/page/p_vgz32sb8td"
+      allowfullscreen
+      sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+      title="NCDs Remission Dashboard"></iframe>
+  </div>
+
+</div><!-- end page-ncd-remission -->
+
+<!-- ===================== PAGE: CARB ===================== -->
+<div class="page-section" id="page-carb">
+
+  <div class="section-title">🌾 ผลการนับคาร์บ จังหวัดตาก</div>
+  <div class="section-subtitle">ข้อมูล ณ วันที่ 11 กันยายน พ.ศ. 2568</div>
+
+  <div class="stats-row" style="margin-bottom:24px">
+    <div class="stat-card"><div class="stat-label">เป้าหมายประชาชน</div><div class="stat-value">479,503</div><div class="stat-sub">ราย</div></div>
+    <div class="stat-card teal"><div class="stat-label">ได้รับคำแนะนำนับคาร์บ</div><div class="stat-value">295,092</div><div class="stat-sub">ราย</div></div>
+    <div class="stat-card accent"><div class="stat-label">ร้อยละ</div><div class="stat-value">61.54%</div><div class="stat-sub">ของเป้าหมาย</div></div>
+    <div class="stat-card rose"><div class="stat-label">อำเภอสูงสุด ท่าสองยาง</div><div class="stat-value">73.40%</div><div class="stat-sub"></div></div>
+  </div>
+
+  <div class="looker-section">
+    <div class="looker-header">
+      <h3>📊 รายงาน Looker Studio — ผลการนับคาร์บ จังหวัดตาก</h3>
+      <a href="https://lookerstudio.google.com/reporting/1249a0a7-6133-4494-a853-ec9462f7bc23/page/p_ds6m3c8dvd" target="_blank">🔗 เปิดหน้าต่างใหม่</a>
+    </div>
+    <iframe class="looker-embed"
+      src="https://lookerstudio.google.com/embed/reporting/1249a0a7-6133-4494-a853-ec9462f7bc23/page/p_ds6m3c8dvd"
+      allowfullscreen
+      sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+      title="Carb Counting Dashboard"></iframe>
+  </div>
+
+</div><!-- end page-carb -->
+
+<!-- ===================== PAGE: HDC / รายงาน ===================== -->
+<div class="page-section" id="page-hdc">
+
+  <div class="section-title">📊 HDC Service — ระบบคลังข้อมูลสุขภาพ จ.ตาก</div>
+  <div class="section-subtitle">Health Data Center | สำนักงานสาธารณสุขจังหวัดตาก เขตสุขภาพที่ 2</div>
+
+  <!-- Quick link to HDC -->
+  <div class="ncd-hero" style="margin-bottom:20px">
+    <div class="ncd-hero-left">
+      <h2>🏥 HDC จังหวัดตาก</h2>
+      <p>ระบบคลังข้อมูลด้านการแพทย์และสุขภาพ สำนักงานสาธารณสุขจังหวัดตาก</p>
+    </div>
+    <a href="https://hdc.moph.go.th/tak" target="_blank" class="btn-open-looker" style="background:linear-gradient(135deg,#1a5c3a,#2a8f5a)">🔗 เปิด HDC จ.ตาก</a>
+  </div>
+
+  <!-- รายงานมาตรฐาน หมวดหมู่ -->
+  <div class="menu-title">📁 รายงานมาตรฐาน HDC — ข้อมูลทั่วไป</div>
+  <div class="hdc-link-grid">
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog/ac4eed1bddb23d6130746d62d2538fd0" target="_blank" class="hdc-link-card hdc-blue">
+      <div class="hdc-icon">👥</div>
+      <div class="hdc-name">ประชากร</div>
+      <div class="hdc-sub">ปิรามิดประชากร, จำนวนแนกเพศ-อายุ, ต่างด้าว</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog/b415510618e13273b2f2918587f86e5d" target="_blank" class="hdc-link-card hdc-teal">
+      <div class="hdc-icon">🏥</div>
+      <div class="hdc-name">จำนวนหน่วยงานสาธารณสุข</div>
+      <div class="hdc-sub">จำนวนหน่วยบริการตามระดับ, Service Plan</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog/dc6012062b7e25f464da5f82f756e4ce" target="_blank" class="hdc-link-card hdc-green">
+      <div class="hdc-icon">🏫</div>
+      <div class="hdc-name">โรงเรียนและนักเรียน</div>
+      <div class="hdc-sub">จำนวนโรงเรียน, นักเรียน, อนามัยโรงเรียน</div>
+    </a>
+  </div>
+
+  <div class="menu-title" style="margin-top:24px">🩺 รายงานสถานะสุขภาพ</div>
+  <div class="hdc-link-grid">
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog/6a1fdf282fd28180eed7d1cfe0155e11" target="_blank" class="hdc-link-card hdc-rose">
+      <div class="hdc-icon">❤️</div>
+      <div class="hdc-name">การป่วยด้วยโรคไม่ติดต่อสำคัญ</div>
+      <div class="hdc-sub">หัวใจ, ความดัน, เบาหวาน, มะเร็ง, COPD (19 รายการ)</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-orange">
+      <div class="hdc-icon">⚠️</div>
+      <div class="hdc-name">สาเหตุป่วย/ตาย</div>
+      <div class="hdc-sub">สาเหตุการเสียชีวิตสำคัญ</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-purple">
+      <div class="hdc-icon">🌿</div>
+      <div class="hdc-name">โรคจากสิ่งแวดล้อม</div>
+      <div class="hdc-sub">โรคจากประกอบอาชีพและสิ่งแวดล้อม</div>
+    </a>
+  </div>
+
+  <div class="menu-title" style="margin-top:24px">🛡️ ส่งเสริมป้องกัน</div>
+  <div class="hdc-link-grid">
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-green">
+      <div class="hdc-icon">👶</div><div class="hdc-name">อนามัยแม่และเด็ก</div><div class="hdc-sub">ฝากครรภ์, คลอด, วัคซีน</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-teal">
+      <div class="hdc-icon">🎒</div><div class="hdc-name">อนามัยโรงเรียน</div><div class="hdc-sub">นักเรียน, ภาวะโภชนาการ</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-blue">
+      <div class="hdc-icon">💉</div><div class="hdc-name">การสร้างเสริมภูมิคุ้มกัน</div><div class="hdc-sub">อัตราการฉีดวัคซีน EPI</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-orange">
+      <div class="hdc-icon">🔍</div><div class="hdc-name">การคัดกรอง</div><div class="hdc-sub">คัดกรองความเสี่ยง, มะเร็ง</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-rose">
+      <div class="hdc-icon">👁️</div><div class="hdc-name">การเฝ้าระวัง</div><div class="hdc-sub">เฝ้าระวังโรคติดต่อ</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-purple">
+      <div class="hdc-icon">🏭</div><div class="hdc-name">งานโภชนาการ</div><div class="hdc-sub">ภาวะโภชนาการประชาชน</div>
+    </a>
+  </div>
+
+  <div class="menu-title" style="margin-top:24px">📋 ข้อมูลตอบสนอง SERVICE PLAN</div>
+  <div class="hdc-link-grid">
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-blue">
+      <div class="hdc-icon">🫀</div><div class="hdc-name">สาขาโรคหัวใจและหลอดเลือด</div><div class="hdc-sub">Service Plan สาขาหัวใจ</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-rose">
+      <div class="hdc-icon">🚑</div><div class="hdc-name">สาขาเมะเร็ง</div><div class="hdc-sub">Service Plan สาขาเมะเร็ง</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-teal">
+      <div class="hdc-icon">🧠</div><div class="hdc-name">สาขาจิตเวช</div><div class="hdc-sub">Service Plan สาขาจิตเวช</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-green">
+      <div class="hdc-icon">🦷</div><div class="hdc-name">สาขาสุขภาพช่องปาก</div><div class="hdc-sub">Service Plan ช่องปาก</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-orange">
+      <div class="hdc-icon">🌬️</div><div class="hdc-name">สาขาโรคปอด COPD</div><div class="hdc-sub">Service Plan COPD</div>
+    </a>
+    <a href="https://hdc.moph.go.th/tak/public/standard-subcatalog" target="_blank" class="hdc-link-card hdc-purple">
+      <div class="hdc-icon">💊</div><div class="hdc-name">สาขา NCD DM, HT, CVD</div><div class="hdc-sub">Service Plan NCD</div>
+    </a>
+  </div>
+
+  <!-- NCDx System -->
+  <div class="menu-title" style="margin-top:24px">🩺 ระบบ NCDx — NCD Service Monitoring</div>
+  <div class="ncd-hero" style="background:linear-gradient(135deg,#e8f0fe,#d0e4fd);border:1px solid #b8d4f8">
+    <div class="ncd-hero-left">
+      <h2 style="color:#1a3a8a">NCDx System</h2>
+      <p>ระบบติดตาม NCD • ลงทะเบียนเสี่ยงเบาหวาน • วิดีโอความรู้ • Care Plan</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="https://www.pccpbn.net/NCDx/index.php" target="_blank" class="btn-open-looker" style="background:linear-gradient(135deg,#1a3a8a,#2456c8)">🔗 เปิด NCDx</a>
+      <a href="https://www.pccpbn.net/NCDx/membercheck.php" target="_blank" class="btn-open-looker" style="background:linear-gradient(135deg,#156a30,#22a04a)">✅ ลงทะเบียนเสี่ยง</a>
+    </div>
+  </div>
+  <div class="hdc-link-grid" style="margin-top:12px">
+    <a href="https://www.pccpbn.net/NCDx/membercheck.php" target="_blank" class="hdc-link-card" style="--hdc-c:#1a3a8a;border-left-color:#1a3a8a">
+      <div class="hdc-icon" style="background:#e8f0fe">👥</div>
+      <div class="hdc-name">ลงทะเบียนประเมินความเสี่ยงโรคเบาหวาน</div>
+      <div class="hdc-sub">สำหรับ อสม. และเจ้าหน้าที่</div>
+    </a>
+    <a href="https://www.pccpbn.net/NCDx/index.php" target="_blank" class="hdc-link-card" style="--hdc-c:#1565c0;border-left-color:#1565c0">
+      <div class="hdc-icon" style="background:#e3f2fd">🎬</div>
+      <div class="hdc-name">วิดีโอความรู้กลุ่มโรค NCD</div>
+      <div class="hdc-sub">สื่อการเรียนรู้ด้าน NCD</div>
+    </a>
+    <a href="https://www.pccpbn.net/NCDx/index.php" target="_blank" class="hdc-link-card" style="--hdc-c:#b71c1c;border-left-color:#b71c1c">
+      <div class="hdc-icon" style="background:#fde8e8">📋</div>
+      <div class="hdc-name">เข้าห้องแผนดูแลตนเอง (Care Plan)</div>
+      <div class="hdc-sub">บันทึกและติดตามการดูแลตนเอง</div>
+    </a>
+  </div>
+
+</div><!-- end page-hdc -->
+
+<!-- ===================== PAGE: MOPH LINKS ===================== -->
+<div class="page-section" id="page-moph-links">
+
+  <div class="section-title">🔗 รวมระบบและเว็บไซต์กระทรวงสาธารณสุข</div>
+  <div class="section-subtitle">ลิงก์ด่วนไปยังระบบต่างๆ ของกระทรวงสาธารณสุข (MOPH)</div>
+
+  <!-- MOPH Systems -->
+  <div class="menu-title">🏛️ ระบบหลัก MOPH</div>
+  <div class="moph-grid">
+
+    <a href="https://smhos.moph.go.th/sm/index.php?module=moph3" target="_blank" class="moph-card" style="--mc:#1a5276">
+      <div class="moph-icon">🌐</div>
+      <div class="moph-name">รวมเว็บไซต์กระทรวงสาธารณสุข</div>
+      <div class="moph-sub">smhos.moph.go.th</div>
+    </a>
+
+    <a href="https://hdcservice.moph.go.th" target="_blank" class="moph-card" style="--mc:#1a6b4a">
+      <div class="moph-icon">📊</div>
+      <div class="moph-name">HDC Service</div>
+      <div class="moph-sub">ระบบคลังข้อมูลสุขภาพ</div>
+    </a>
+
+    <a href="https://hdc.moph.go.th/tak" target="_blank" class="moph-card" style="--mc:#0d47a1">
+      <div class="moph-icon">🗂️</div>
+      <div class="moph-name">HDC จังหวัดตาก</div>
+      <div class="moph-sub">รายงานมาตรฐานจังหวัดตาก</div>
+    </a>
+
+    <a href="https://ncd-reg.moph.go.th/dashboard/" target="_blank" class="moph-card" style="--mc:#880e4f">
+      <div class="moph-icon">❤️</div>
+      <div class="moph-name">MOPH NCD</div>
+      <div class="moph-sub">ระบบ NCD กระทรวงสาธารณสุข</div>
+    </a>
+
+    <a href="https://phrdashboard.moph.go.th" target="_blank" class="moph-card" style="--mc:#4a148c">
+      <div class="moph-icon">📈</div>
+      <div class="moph-name">PHR Dashboard</div>
+      <div class="moph-sub">Personal Health Record</div>
+    </a>
+
+    <a href="https://cvpi.moph.go.th" target="_blank" class="moph-card" style="--mc:#bf360c">
+      <div class="moph-icon">💉</div>
+      <div class="moph-name">CVPI Dashboard</div>
+      <div class="moph-sub">วัคซีน HPV และโครงการพิเศษ</div>
+    </a>
+
+    <a href="https://mophclaim.moph.go.th" target="_blank" class="moph-card" style="--mc:#1b5e20">
+      <div class="moph-icon">💰</div>
+      <div class="moph-name">MOPH Claim</div>
+      <div class="moph-sub">ระบบเบิกจ่ายค่าบริการ</div>
+    </a>
+
+    <a href="https://refer.moph.go.th" target="_blank" class="moph-card" style="--mc:#006064">
+      <div class="moph-icon">🚑</div>
+      <div class="moph-name">MOPH Refer</div>
+      <div class="moph-sub">ระบบส่งต่อผู้ป่วย</div>
+    </a>
+
+    <a href="https://imaginghub.moph.go.th" target="_blank" class="moph-card" style="--mc:#37474f">
+      <div class="moph-icon">🩻</div>
+      <div class="moph-name">Imaging Hub</div>
+      <div class="moph-sub">ระบบภาพถ่ายรังสีดิจิทัล</div>
+    </a>
+
+    <a href="https://phr.moph.go.th" target="_blank" class="moph-card" style="--mc:#e65100">
+      <div class="moph-icon">📁</div>
+      <div class="moph-name">MOPH PHR Viewer</div>
+      <div class="moph-sub">ดูข้อมูลสุขภาพส่วนบุคคล</div>
+    </a>
+
+    <a href="https://account.moph.go.th" target="_blank" class="moph-card" style="--mc:#1a237e">
+      <div class="moph-icon">🔐</div>
+      <div class="moph-name">Account Center</div>
+      <div class="moph-sub">จัดการบัญชีผู้ใช้งาน MOPH</div>
+    </a>
+
+    <a href="https://idpadmin.moph.go.th" target="_blank" class="moph-card" style="--mc:#311b92">
+      <div class="moph-icon">🛡️</div>
+      <div class="moph-name">IDP Admin</div>
+      <div class="moph-sub">Identity Provider ระบบยืนยันตัวตน</div>
+    </a>
+
+  </div>
+
+  <!-- PCC Systems -->
+  <div class="menu-title" style="margin-top:28px">🏥 ระบบ PCC / คลินิกหมอครอบครัว</div>
+  <div class="moph-grid">
+
+    <a href="https://www.pccpbn.net/pcc_app/index.php" target="_blank" class="moph-card" style="--mc:#1a6b4a">
+      <div class="moph-icon">🏠</div>
+      <div class="moph-name">PCC App หมอครอบครัว</div>
+      <div class="moph-sub">pccpbn.net — ระบบหลัก PCC</div>
+    </a>
+
+    <a href="https://www.pccpbn.net/NCDx/index.php" target="_blank" class="moph-card" style="--mc:#1a3a8a">
+      <div class="moph-icon">🩺</div>
+      <div class="moph-name">NCDx System</div>
+      <div class="moph-sub">NCD Service Monitoring</div>
+    </a>
+
+    <a href="https://www.pccpbn.net/older_screen/index.php" target="_blank" class="moph-card" style="--mc:#2196a6">
+      <div class="moph-icon">👴</div>
+      <div class="moph-name">Aging System</div>
+      <div class="moph-sub">ระบบกลุ่มสูงวัย</div>
+    </a>
+
+    <a href="https://lookerstudio.google.com/reporting/1249a0a7-6133-4494-a853-ec9462f7bc23" target="_blank" class="moph-card" style="--mc:#d84315">
+      <div class="moph-icon">📊</div>
+      <div class="moph-name">Looker Studio NCD ตาก</div>
+      <div class="moph-sub">รายงาน NCD Prevention จ.ตาก</div>
+    </a>
+
+    <a href="https://ncd-reg.moph.go.th/dashboard/dashboardOverview" target="_blank" class="moph-card" style="--mc:#00796b">
+      <div class="moph-icon">📋</div>
+      <div class="moph-name">NCDs Registry Dashboard</div>
+      <div class="moph-sub">ทะเบียนผู้ป่วย NCD ระดับประเทศ</div>
+    </a>
+
+  </div>
+
+</div><!-- end page-moph-links -->
+
+<!-- ===================== PAGE: NCDs REGISTRY ===================== -->
+<div class="page-section" id="page-ncd-registry">
+
+  <div class="section-title">📋 NCDs Registry Dashboard</div>
+  <div class="section-subtitle">ระบบทะเบียนผู้ป่วยโรคไม่ติดต่อเรื้อรัง | ncd-reg.moph.go.th — เขตสุขภาพที่ 2 (PCC รพ.แม่สอด)</div>
+
+  <!-- Hero Banner -->
+  <div class="ncd-hero" style="background:linear-gradient(135deg,#e0f2f1,#b2dfdb);border:1px solid #80cbc4;margin-bottom:20px">
+    <div class="ncd-hero-left">
+      <h2 style="color:#004d40">📊 NCDs Registry — โรคไม่ติดต่อเรื้อรัง</h2>
+      <p>แดชบอร์ดข้อมูลผู้ป่วย NCD • สถานะการรักษา • ยอดการส่งข้อมูล • เขตสุขภาพที่ 2</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="https://ncd-reg.moph.go.th/dashboard/dashboardOverview" target="_blank" class="btn-open-looker" style="background:linear-gradient(135deg,#00695c,#00897b)">📊 เปิด NCDs Registry</a>
+      <a href="https://ncd-reg.moph.go.th" target="_blank" class="btn-open-looker" style="background:linear-gradient(135deg,#1a5276,#2e86c1)">🔐 ทะเบียนผู้ป่วย NCD</a>
+    </div>
+  </div>
+
+  <!-- กลุ่มโรค NCD 9 กลุ่ม -->
+  <div class="menu-title">🩺 กลุ่มโรคไม่ติดต่อเรื้อรัง (NCDs) 9 กลุ่ม</div>
+  <div class="registry-disease-grid">
+    <div class="reg-disease-card" style="--dc:#e53935">
+      <div class="reg-d-icon">🩸</div>
+      <div class="reg-d-code">E10-E14</div>
+      <div class="reg-d-name">โรคเบาหวาน</div>
+    </div>
+    <div class="reg-disease-card" style="--dc:#d81b60">
+      <div class="reg-d-icon">💊</div>
+      <div class="reg-d-code">I10-I14</div>
+      <div class="reg-d-name">โรคความดันโลหิตสูง</div>
+    </div>
+    <div class="reg-disease-card" style="--dc:#8e24aa">
+      <div class="reg-d-icon">🫘</div>
+      <div class="reg-d-code">N18.3-N18.9</div>
+      <div class="reg-d-name">โรคไตวายเรื้อรัง</div>
+    </div>
+    <div class="reg-disease-card" style="--dc:#e53935">
+      <div class="reg-d-icon">🫀</div>
+      <div class="reg-d-code">I20-I25</div>
+      <div class="reg-d-name">โรคหัวใจ</div>
+    </div>
+    <div class="reg-disease-card" style="--dc:#c62828">
+      <div class="reg-d-icon">🧠</div>
+      <div class="reg-d-code">I60-I69</div>
+      <div class="reg-d-name">โรคหลอดเลือดสมอง</div>
+    </div>
+    <div class="reg-disease-card" style="--dc:#00838f">
+      <div class="reg-d-icon">🫁</div>
+      <div class="reg-d-code">J44</div>
+      <div class="reg-d-name">โรคถุงลมโป่งพอง</div>
+    </div>
+    <div class="reg-disease-card" style="--dc:#f57f17">
+      <div class="reg-d-icon">🩺</div>
+      <div class="reg-d-code">E78</div>
+      <div class="reg-d-name">โรคไขมันในเลือดสูง</div>
+    </div>
+    <div class="reg-disease-card" style="--dc:#2e7d32">
+      <div class="reg-d-icon">⚖️</div>
+      <div class="reg-d-code">E66</div>
+      <div class="reg-d-name">โรคอ้วน</div>
+    </div>
+    <div class="reg-disease-card" style="--dc:#37474f">
+      <div class="reg-d-icon">🚬</div>
+      <div class="reg-d-code">F17</div>
+      <div class="reg-d-name">บุหรี่ไฟฟ้า</div>
+    </div>
+  </div>
+
+  <!-- สถิติระดับประเทศ จาก Registry -->
+  <div class="menu-title" style="margin-top:24px">📈 สถิติภาพรวม MOPH-NCD Registry (ทั่วประเทศ)</div>
+  <div class="stats-row" style="margin-bottom:20px">
+    <div class="stat-card">
+      <div class="stat-label">ยังรักษาอยู่ (ทั่วประเทศ)</div>
+      <div class="stat-value" style="font-size:22px">984,675</div>
+      <div class="stat-sub">คน (ข้อมูล ณ มี.ค. 2569)</div>
+    </div>
+    <div class="stat-card teal">
+      <div class="stat-label">รักษาหายแล้ว</div>
+      <div class="stat-value" style="font-size:22px">6,627</div>
+      <div class="stat-sub">คน</div>
+    </div>
+    <div class="stat-card rose">
+      <div class="stat-label">เสียชีวิต</div>
+      <div class="stat-value" style="font-size:22px">72,471</div>
+      <div class="stat-sub">คน</div>
+    </div>
+    <div class="stat-card accent">
+      <div class="stat-label">อื่นๆ</div>
+      <div class="stat-value" style="font-size:22px">62,239</div>
+      <div class="stat-sub">คน</div>
+    </div>
+  </div>
+
+  <!-- ตารางรายเขตสุขภาพ -->
+  <div class="ncd-table-wrap" style="margin-bottom:20px">
+    <div class="ncd-table-header">
+      <h3>📋 รายงานสรุปข้อมูล NCDs รายเขตสุขภาพ (ทั่วประเทศ)</h3>
+      <span>ข้อมูล ณ 5 มี.ค. 2569</span>
+    </div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>เขตสุขภาพ</th>
+          <th>เบาหวาน</th>
+          <th>ความดัน</th>
+          <th>ไตวายเรื้อรัง</th>
+          <th>หัวใจ</th>
+          <th>หลอดเลือดสมอง</th>
+          <th>ถุงลมโป่งพอง</th>
+          <th>ไขมันในเลือดสูง</th>
+          <th>โรคอ้วน</th>
+          <th>บุหรี่ไฟฟ้า</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>เขต 1</td><td>128,890</td><td>216,906</td><td>33,402</td><td>4,072</td><td>3,028</td><td>9,184</td><td>22,060</td><td>1,201</td><td>4</td></tr>
+        <tr style="background:#e8f5ee;font-weight:700"><td>เขต 2 ⭐ (ตาก)</td><td>36,142</td><td>51,744</td><td>9,714</td><td>103</td><td>833</td><td>999</td><td>2,125</td><td>2</td><td>0</td></tr>
+        <tr><td>เขต 3</td><td>33,852</td><td>41,240</td><td>9,103</td><td>390</td><td>747</td><td>1,745</td><td>6,499</td><td>703</td><td>0</td></tr>
+        <tr><td>เขต 4</td><td>41,152</td><td>54,684</td><td>3,733</td><td>723</td><td>498</td><td>690</td><td>6,946</td><td>346</td><td>3</td></tr>
+        <tr><td>เขต 5</td><td>59,137</td><td>67,599</td><td>4,181</td><td>273</td><td>36</td><td>2,145</td><td>1,714</td><td>244</td><td>1</td></tr>
+        <tr><td>เขต 6</td><td>77,365</td><td>118,396</td><td>7,082</td><td>326</td><td>1,820</td><td>4,823</td><td>4,202</td><td>3,849</td><td>10</td></tr>
+        <tr><td>เขต 7</td><td>62,644</td><td>72,084</td><td>11,057</td><td>416</td><td>1,300</td><td>1,903</td><td>4,898</td><td>354</td><td>0</td></tr>
+        <tr><td>เขต 8</td><td>40,474</td><td>35,900</td><td>2,445</td><td>115</td><td>251</td><td>801</td><td>55</td><td>3</td><td>0</td></tr>
+        <tr><td>เขต 9</td><td>8,673</td><td>7,908</td><td>804</td><td>20</td><td>48</td><td>22</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>เขต 10</td><td>33,617</td><td>36,110</td><td>2,227</td><td>116</td><td>509</td><td>2,010</td><td>819</td><td>53</td><td>2</td></tr>
+        <tr><td>เขต 11</td><td>81,469</td><td>106,204</td><td>7,735</td><td>1,297</td><td>2,816</td><td>5,277</td><td>15,465</td><td>262</td><td>71</td></tr>
+        <tr><td>เขต 12</td><td>35,965</td><td>47,255</td><td>2,633</td><td>193</td><td>964</td><td>2,536</td><td>13,522</td><td>90</td><td>3</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- ยอดส่งข้อมูล -->
+  <div class="menu-title">📤 สถานะการส่งข้อมูลหน่วยบริการ</div>
+  <div class="stats-row" style="margin-bottom:20px">
+    <div class="stat-card">
+      <div class="stat-label">หน่วยบริการทั้งหมด</div>
+      <div class="stat-value">901</div>
+      <div class="stat-sub">แห่ง (ทั่วประเทศ)</div>
+    </div>
+    <div class="stat-card teal">
+      <div class="stat-label">ส่งข้อมูลแล้ว</div>
+      <div class="stat-value" style="color:#1a6b4a">533</div>
+      <div class="stat-sub">แห่ง — 59.16%</div>
+    </div>
+    <div class="stat-card rose">
+      <div class="stat-label">ยังไม่ส่งข้อมูล</div>
+      <div class="stat-value" style="color:#c0395a">368</div>
+      <div class="stat-sub">แห่ง — 40.84%</div>
+    </div>
+    <div class="stat-card accent">
+      <div class="stat-label">ส่งตรงเวลา</div>
+      <div class="stat-value">319</div>
+      <div class="stat-sub">แห่ง — 35.41%</div>
+    </div>
+  </div>
+
+  <!-- Embed NCDs Registry -->
+  <div class="looker-section">
+    <div class="looker-header" style="background:linear-gradient(90deg,#004d40,#00796b)">
+      <h3>📊 NCDs Registry Dashboard — ระบบสด ncd-reg.moph.go.th</h3>
+      <a href="https://ncd-reg.moph.go.th/dashboard/dashboardOverview" target="_blank">🔗 เปิดหน้าต่างใหม่</a>
+    </div>
+    <iframe class="looker-embed" style="height:750px"
+      src="https://ncd-reg.moph.go.th/dashboard/dashboardOverview"
+      allowfullscreen
+      title="NCDs Registry Dashboard"></iframe>
+  </div>
+
+</div><!-- end page-ncd-registry -->
+
+</main>
+
+<script>
+function showPage(pageId, tabBtn) {
+  document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + pageId).classList.add('active');
+  tabBtn.classList.add('active');
+}
+</script>
+
+<!-- FOOTER -->
+<footer>
+  © 2568 <strong>PCC คลินิกหมอครอบครัว รพ.แม่สอด</strong> · Primary Care Cluster · All Rights Reserved
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <div class="modal-logo">
+      <div class="circle">PCC</div>
+      <h2>เข้าสู่ระบบ</h2>
+      <p>คลินิกหมอครอบครัว รพ.แม่สอด</p>
+    </div>
+    <div class="form-group">
+      <label>ชื่อผู้ใช้งาน (Username)</label>
+      <input type="text" placeholder="กรอกชื่อผู้ใช้งาน">
+    </div>
+    <div class="form-group">
+      <label>รหัสผ่าน (Password)</label>
+      <input type="password" placeholder="กรอกรหัสผ่าน">
+    </div>
+    <div class="form-group">
+      <label>กลุ่มผู้ใช้งาน</label>
+      <select>
+        <option>เลือกกลุ่มผู้ใช้งาน</option>
+        <option>อสม.</option>
+        <option>เจ้าหน้าที่สาธารณสุข</option>
+        <option>แพทย์ / พยาบาล</option>
+        <option>ผู้ดูแลระบบ</option>
+      </select>
+    </div>
+    <button class="btn-submit">✅ ยืนยันเข้าสู่ระบบ</button>
+    <button class="btn-cancel" onclick="document.getElementById('loginModal').classList.remove('active')">ยกเลิก</button>
+  </div>
+</div>
+
+</body>
+</html>
